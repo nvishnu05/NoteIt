@@ -1,3 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-['Inter'] antialiased bg-stone-50 text-stone-900 transition-colors duration-500 overflow-x-hidden;
+  }
+
+  .dark body {
+    @apply bg-[#0c0c0c] text-stone-100;
+  }
+}
+
+@layer components {
+  .zen-glass {
+    @apply bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-sm;
+  }
+
+  .zen-card {
+    @apply relative overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-stone-200/50 dark:hover:shadow-black/50;
+  }
+
+  .zen-input {
+    @apply bg-transparent border-none focus:ring-0 placeholder:text-stone-400 dark:placeholder:text-stone-600;
+  }
+
+  .zen-button {
+    @apply px-4 py-2 rounded-full transition-all duration-300 flex items-center gap-2 text-sm font-medium;
+  }
+
+  .zen-button-primary {
+    @apply bg-stone-900 text-white hover:bg-stone-800 dark:bg-stone-100 dark:text-stone-900 dark:hover:bg-white;
+  }
+
+  .zen-button-secondary {
+    @apply bg-stone-100 text-stone-600 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-400 dark:hover:bg-stone-700;
+  }
+}
+
+/* Custom Utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes progressShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-progress {
+  background-size: 200% 200%;
+  animation: progressShift 3s ease infinite;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-stone-200 dark:bg-stone-800 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-stone-300 dark:bg-stone-700;
+}
+
+/* Expansion Utilities */
+.zen-expandable-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.zen-expandable-grid.is-expanded {
+  grid-template-rows: 1fr;
+}
+
+.zen-expandable-content {
+  overflow: hidden;
+}

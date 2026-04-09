@@ -1,6 +1,5 @@
 import React from 'react';
-import Search from 'lucide-react/dist/esm/icons/search';
-import Filter from 'lucide-react/dist/esm/icons/filter';
+import { Search, SlidersHorizontal, X } from 'lucide-react';
 
 interface SearchBarProps {
   searchTerm: string;
@@ -18,36 +17,45 @@ const SearchBar: React.FC<SearchBarProps> = ({
   categories
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 mb-8">
-      <div className="relative flex-1">
-        {/* Fix: Ensure Search icon renders correctly */}
-        <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-          <Search width={20} height={20} color="#3b82f6" />
-        </span>
+    <div className="flex flex-col md:flex-row items-center gap-8 mb-16 animate-fade-in">
+      <div className="relative flex-1 w-full group">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 text-stone-300 group-focus-within:text-stone-900 dark:group-focus-within:text-stone-100 transition-colors">
+          <Search className="w-5 h-5" />
+        </div>
         <input
           type="text"
-          placeholder="Search notes..."
+          placeholder="Filter your thoughts..."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border border-blue-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-400 focus:border-transparent bg-white/80 dark:bg-gray-800/80 transition-all duration-200 placeholder-blue-400 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100"
+          className="w-full bg-transparent border-none pl-10 pr-10 py-4 text-lg font-light focus:ring-0 placeholder:text-stone-300 dark:placeholder:text-stone-800 text-stone-900 dark:text-stone-100 transition-all"
         />
+        {searchTerm && (
+          <button 
+            onClick={() => onSearchChange('')}
+            className="absolute right-0 top-1/2 -translate-y-1/2 p-2 text-stone-300 hover:text-stone-600 dark:hover:text-stone-400"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-stone-100 dark:bg-stone-900 group-focus-within:bg-stone-900 dark:group-focus-within:bg-stone-100 transition-all duration-500" />
       </div>
       
-      <div className="relative">
-        {/* Fix: Ensure Filter icon renders correctly */}
-        <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-          <Filter width={20} height={20} color="#3b82f6" />
-        </span>
-        <select
-          value={selectedCategory}
-          onChange={(e) => onCategoryChange(e.target.value)}
-          className="pl-10 pr-4 py-3 border border-blue-200 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-400 focus:border-transparent bg-white/80 dark:bg-gray-800/80 transition-all duration-200 appearance-none cursor-pointer min-w-40 text-gray-900 dark:text-gray-100"
-        >
-          <option value="">All Categories</option>
-          {categories.map(category => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
+      <div className="flex items-center gap-4 w-full md:w-auto">
+        <div className="relative group w-full md:w-auto">
+          <SlidersHorizontal className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 group-hover:text-stone-900 dark:group-hover:text-stone-100 transition-colors" />
+          <select
+            value={selectedCategory}
+            onChange={(e) => onCategoryChange(e.target.value)}
+            className="w-full md:w-48 pl-10 pr-8 py-3 bg-stone-50 dark:bg-stone-900/50 rounded-full border-none ring-1 ring-stone-100 dark:ring-stone-800 focus:ring-stone-900 appearance-none text-[11px] uppercase tracking-widest font-semibold text-stone-600 dark:text-stone-400 cursor-pointer transition-all"
+          >
+            <option value="">All Streams</option>
+            {categories.map(category => (
+              <option key={category} value={category} className="bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100">
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
     </div>
   );
